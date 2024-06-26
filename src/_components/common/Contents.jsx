@@ -2,7 +2,7 @@ import React from 'react';
 import { Layout, theme } from 'antd';
 const { Content } = Layout;
 
-const Contents = () => {
+const Contents = ({content}) => {
     const {
         token: { colorBgContainer, borderRadiusLG },
     } = theme.useToken();
@@ -17,8 +17,9 @@ const Contents = () => {
             }}
         >
             Content
+            {content}
         </Content>
     )
 }
 
-export default Contents
+export default Contents;

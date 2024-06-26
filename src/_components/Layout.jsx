@@ -5,7 +5,7 @@ import Sidebar from './common/sidebar/Sidebar';
 import Breadcrumbs from './common/Breadcrumb';
 import Contents from './common/Contents';
 
-const Layouts = () => {
+const Layouts = (props) => {
     const [isSidebarCollapsed, setSidebarCollased] = useState(false);
 
     const toggleSidebar = () => {
@@ -22,7 +22,7 @@ const Layouts = () => {
                     }}
                 >
                     <Breadcrumbs />
-                    <Contents />
+                    <Contents content={props.children}/>
                 </Layout>
             </Layout>
         </Layout>
