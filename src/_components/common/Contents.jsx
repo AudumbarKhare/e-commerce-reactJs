@@ -16,7 +16,6 @@ const Contents = ({content}) => {
                 borderRadius: borderRadiusLG,
             }}
         >
-            Content
             {content}
         </Content>
     )

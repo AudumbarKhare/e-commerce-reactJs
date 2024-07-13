@@ -11,14 +11,19 @@ export const MENUITEMS = [
         children: [
             { key: '5', label: 'BrandLogo', path: '/masters/brandlogo', type: 'link' },
             { key: '6', label: 'Category', path: '/masters/category', type: 'link' },
-            {
-                key: 'sub3',
-                label: 'Products',
-                children: [
-                    { key: '7', label: 'Product List', path: '/products/physical/product-list', type: 'link' },
-                    { key: '8', label: 'Add Product', path: '/products/physical/add-product', type: 'link' },
-                ],
-            },
+            { key:'9', label: 'Color', path: '/masters/color', type: 'link' },
+            { key:'10', label: 'Tag', path: '/masters/tag', type: 'link' },
+            { key:'11', label: 'Size', path: '/masters/size', type: 'link' },
+            { key:'12', label: 'UserType', path: '/masters/usertype', type: 'link' }
+        ],
+    },
+    {
+        key: 'sub3',
+        label: 'Products',
+        icon: <AppstoreOutlined />,
+        children: [
+            { key: '7', label: 'Product List', path: '/products/physical/product-list', type: 'link' },
+            { key: '8', label: 'Add Product', path: '/products/physical/add-product', type: 'link' },
         ],
     },
     {

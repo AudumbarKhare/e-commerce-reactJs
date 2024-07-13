@@ -1,7 +1,7 @@
-import authHeader from '../../_helpers/Auth.header';
-import BasePath from '../../_helpers/BasePath';
+import authHeader from '../_helpers/Auth.header';
+import BasePath from '../_helpers/BasePath';
 
-export const userService = {
+export const CommonService = {
     login,
     register,
 
@@ -25,6 +25,7 @@ async function register(model) {
 }
 
 async function save(controlerName, isFile, model) {
+    // debugger;
     const requestOptions = createRequestOptions('POST', model, isFile);
     const response = await fetch(BasePath.BASE_API_PATH + `${controlerName}/Save/`, requestOptions);
     return handleResponse(response);
