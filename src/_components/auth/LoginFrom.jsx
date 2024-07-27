@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 import { changeLoggedIn } from '../../_actions/User.Action';
 import { toast } from 'react-toastify';
 import WithNavigate from '../../_helpers/WithNavigate';
+import { Spin } from 'antd';
 
 const LoginFrom = (props) => {
+    const [loading, setLoading] = useState(false);
 
     const longinValidator = new FormValidator([
         {
@@ -54,6 +56,7 @@ const LoginFrom = (props) => {
     };
 
     const handleLoginSubmit = (e) => {
+        setLoading(true);
         e.preventDefault();
         const validation = longinValidator.validate(loginState, '');
         setLoginState({
@@ -78,7 +81,7 @@ const LoginFrom = (props) => {
                         localStorage.clear();
                         clearLoginForm();
                     }
-                )
+                ).finally(() => setLoading(false))
         }
     };
 
@@ -87,6 +90,7 @@ const LoginFrom = (props) => {
 
     return (
         <>
+        <Spin spinning={loading}>
             <form className="form-horizontal auth-form" onSubmit={handleLoginSubmit}>
                 <div className='form-group pb-2'>
                     <input
@@ -114,6 +118,7 @@ const LoginFrom = (props) => {
                     <button className="btn btn-primary" type="submit" >Login</button>
                 </div>
             </form>
+            </Spin>
         </>
     );
 };

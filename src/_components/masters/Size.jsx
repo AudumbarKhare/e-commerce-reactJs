@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import FormValidator from '../../_validators/FormValidator';
-import ComponentLayout from '../ComponentLayout';
-import DbOperation from '../../_helpers/dbOperation';
-import { CommonService } from '../../_services/Common.Service';
+import { Button, Card, Col, Row, Form, Input, Spin } from 'antd';
 import { toast, ToastContainer } from 'react-toastify';
-import { Button, Card, Col, Form, Input, Modal, Row } from 'antd';
 import Breadcrumbs from '../common/Breadcrumb';
 import { Tables } from '../common/table/Tables';
 import getColumns from '../common/table/genColumns';
+import DynamicModal from '../common/DynamicModal';
+import { CommonService } from '../../_services/Common.Service';
+import DbOperation from '../../_helpers/dbOperation';
 
 const Size = () => {
   const validatorForm = new FormValidator([
@@ -26,6 +26,7 @@ const Size = () => {
   const [size, setSize] = useState({ id: 0, name: '' });
   const [submitted, setSubmitted] = useState(false);
   const [formValidation, setFormValidation] = useState(validatorForm.valid());
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -43,17 +44,18 @@ const Size = () => {
     setFormValidation(validatorForm.valid());
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
     const validation = validatorForm.validate({ size }, 'size');
     setFormValidation(validation);
     setSubmitted(true);
 
     if (validation.isValid) {
+      setLoading(true);
+      const updatedSize = { ...size };
+
       switch (dbops) {
         case DbOperation.create:
-          debugger;
-          CommonService.save("SizeMaster", false, size)
+          CommonService.save("SizeMaster", false, updatedSize)
             .then(
               res => {
                 if (res.isSuccess) {
@@ -67,24 +69,24 @@ const Size = () => {
               () => {
                 toast.error("Something Went Wrong !!", "Size Master");
               }
-            );
+            ).finally(() => setLoading(false));
           break;
         case DbOperation.update:
-          CommonService.update("SizeMaster", false, size)
+          CommonService.update("SizeMaster", false, updatedSize)
             .then(
               res => {
                 if (res.isSuccess) {
-                  toast.success("Data has been update successfully !!", "Size Master");
+                  toast.success("Data has been updated successfully !!", "Size Master");
                   clearForm();
                   getData();
                 } else {
-                  toast.error(res.error[0], "Size Master");
+                  toast.error(res.errors[0], "Size Master");
                 }
               },
               () => {
                 toast.error("Something Went Wrong !!", "Size Master");
               }
-            );
+            ).finally(() => setLoading(false));
           break;
         default:
           break;
@@ -93,6 +95,7 @@ const Size = () => {
   };
 
   const getData = () => {
+    setLoading(true);
     CommonService.getAll("SizeMaster", false)
       .then(
         res => {
@@ -103,9 +106,9 @@ const Size = () => {
           }
         },
         () => {
-          toast.error("Something Went Wrong !!", "Size Master")
+          toast.error("Something Went Wrong !!", "Size Master");
         }
-      )
+      ).finally(() => setLoading(false));
   };
 
   useEffect(() => {
@@ -124,14 +127,15 @@ const Size = () => {
   const onOpenModal = () => {
     clearForm();
     setOpen(true);
-  }
+  };
 
   const onCloseModal = () => {
     setOpen(false);
-  }
+  };
 
   const onDelete = (Id) => {
     let obj = { id: Id };
+    setLoading(true);
     CommonService.delete("SizeMaster", false, obj)
       .then(
         res => {
@@ -144,55 +148,61 @@ const Size = () => {
         () => {
           toast.error("Something Went Wrong !!", "Size Master");
         }
-      );
+      ).finally(() => setLoading(false));
   };
 
   const columns = ['name', 'createdOn'];
-  const tableCols = getColumns(columns, true, onEdit, onDelete)
+  const tableCols = getColumns(columns, true, onEdit, onDelete);
 
   let _validation = submitted ? validatorForm.validate({ size }, 'size') : formValidation;
 
   return (
-    // <ComponentLayout />
     <>
       <div className='container-fluid'>
         <Row>
           <Col span={24}>
-            <Card title='Products Size'>
-              <Button type='primary' onClick={onOpenModal}> Add Size </Button>
-              <Modal
-                title="Add Size"
-                visible={open}
-                onCancel={onCloseModal}
-                footer={null}
-              >
-                <Form onSubmitCapture={handleSubmit}>
-                  <Form.Item
-                    label="Size Name"
-                    validateStatus={_validation.name.isInvalid ? 'error' : ''}
-                    help={_validation.name.isInvalid ? _validation.name.message : ''}
-                  >
-                    <Input
-                      type='text'
-                      name='name'
-                      value={size.name}
-                      onChange={handleInputChange}
-                    />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button type='primary' htmlType='submit'>{btnText}</Button>
-                    <Button type='default' onClick={onCloseModal}>Close</Button>
-                  </Form.Item>
-                </Form>
-              </Modal>
-              <Tables data={data} columnFilter columns={tableCols}  />
+            <Card title='Size Master'>
+              <Spin spinning={loading}>
+                <Tables
+                  data={data}
+                  columns={tableCols}
+                  onAdd={onOpenModal}
+                />
+              </Spin>
             </Card>
           </Col>
         </Row>
+
+        <DynamicModal
+          visible={open}
+          onClose={onCloseModal}
+          onSubmit={handleSubmit}
+          title={dbops === DbOperation.create ? "Add Size" : "Edit Size"}
+          footerButtons={[
+            <Button key="submit" type='primary' onClick={handleSubmit}>{btnText}</Button>,
+            <Button key="close" type='default' onClick={onCloseModal}>Close</Button>
+          ]}
+        >
+          <Form layout="vertical" onFinish={handleSubmit}>
+            <Form.Item
+              label="Size Name"
+              validateStatus={_validation.name.isInvalid ? 'error' : ''}
+              help={_validation.name.isInvalid ? _validation.name.message : ''}
+            >
+              <Input
+                type='text'
+                name='name'
+                value={size.name}
+                onChange={handleInputChange}
+              />
+            </Form.Item>
+          </Form>
+        </DynamicModal>
       </div>
       <ToastContainer />
     </>
-  )
-}
+  );
+};
 
 export default Size;
+
