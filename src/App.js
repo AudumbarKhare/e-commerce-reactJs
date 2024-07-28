@@ -6,6 +6,11 @@ import Login from './_components/auth/Login';
 import PrivateRoute from './_privateRoute/PrivateRoute';
 import Dashboard from './_components/dashoard/Dashboard';
 import Size from './_components/masters/Size';
+import Category from './_components/masters/Category';
+import Color from './_components/masters/Color';
+import Tag from './_components/masters/Tag';
+import UserType from './_components/masters/UserType';
+import BrandLogo from './_components/masters/BrandLogo';
 
 export default class App extends Component {
   render() {
@@ -17,6 +22,11 @@ export default class App extends Component {
           <Route path='/' element={<PrivateRoute />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path='/masters/size' element={<Size />} />
+            <Route path='/masters/category' element={<Category />} />
+            <Route path='/masters/color' element={<Color />} />
+            <Route path='/masters/tag' element={<Tag />} />
+            <Route path='/masters/usertype' element={<UserType />} />
+            <Route path='/masters/brandlogo' element={<BrandLogo />} />
           </Route>
           <Route path='*' element={<Login />} />
         </Routes>
