@@ -146,6 +146,7 @@ const Color = () => {
                 res => {
                     if (res.isSuccess) {
                         getData();
+                        toast.success('Data Delete Successfully !!','Color Master');
                     } else {
                         toast.error(res.errors[0], "Color Master");
                     }
@@ -170,6 +171,7 @@ const Color = () => {
                                 data={data}
                                 columns={tabeCols}
                                 onAdd={onOpenModal}
+                                saveBtnTitle="Add Color"
                             />
                         </Spin>
                     </Col>

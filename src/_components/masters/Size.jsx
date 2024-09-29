@@ -141,6 +141,7 @@ const Size = () => {
         res => {
           if (res.isSuccess) {
             getData();
+            toast.success('Data Delete Successfully !!','Size Master');
           } else {
             toast.error(res.errors[0], "Size Master");
           }
@@ -167,6 +168,7 @@ const Size = () => {
                   data={data}
                   columns={tableCols}
                   onAdd={onOpenModal}
+                  saveBtnTitle="Add Size"
                 />
               </Spin>
             </Card>

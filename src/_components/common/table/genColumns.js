@@ -1,6 +1,7 @@
 import React from 'react';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
+import BasePath from '../../../_helpers/BasePath';
 
 const { confirm } = Modal;
 
@@ -34,6 +35,7 @@ const getColumns = (tableColumns, isAction, editRow, deleteRow) => {
 
         switch (key) {
             case 'imagePath':
+                // console.log(row.original.imagePath)
                 columns.push({
                     ...commonProps,
                     disableFilters: true,

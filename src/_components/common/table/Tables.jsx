@@ -6,7 +6,7 @@ import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 import AddButton from '../AddButton';
 import './table.css';
 
-export const Tables = ({ data, columns, columnFilter = false, onAdd }) => {
+export const Tables = ({ data, columns, columnFilter = false, onAdd, saveBtnTitle = 'Add New Record' }) => {
     const defaultColumn = useMemo(() => ({
         Filter: ColumnFilterPopUp ? ColumnFilterPopUp : () => null
     }), [ColumnFilterPopUp]);
@@ -47,7 +47,7 @@ export const Tables = ({ data, columns, columnFilter = false, onAdd }) => {
         <>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                 <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-                <AddButton title="Add Size" onClick={onAdd} /> {/* Add the button here */}
+                <AddButton title={saveBtnTitle} onClick={onAdd} /> {/* Add the button here */}
             </div>
 
             <table {...getTableProps()} style={{ width: '100%', borderCollapse: 'collapse' }}>

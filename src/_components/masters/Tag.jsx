@@ -146,6 +146,7 @@ const Tag = () => {
         res => {
           if (res.isSuccess) {
             getData();
+            toast.success('Data Delete Successfully !!','Tag Master');
           } else {
             toast.error(res.errors[0], "Tag Master");
           }
@@ -172,6 +173,7 @@ const Tag = () => {
                   data={data}
                   columns={tableCols}
                   onAdd={onOpenModal}
+                  saveBtnTitle="Add Tag"
                 />
               </Spin>
             </Card>

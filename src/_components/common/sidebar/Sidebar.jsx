@@ -45,7 +45,7 @@ const Sidebar = ({ collase, isCollase }) => {
                     borderRight: 0,
                 }}
                 inlineCollapsed={isCollase}>
-                <UserProfile />
+                {!isCollase ? <UserProfile /> : ''}
                 {MENUITEMS.map(item =>
                     item.children ? SubMenuItem(item) : MenuItem(item)
                 )}
