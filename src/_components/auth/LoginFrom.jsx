@@ -56,7 +56,7 @@ const LoginFrom = (props) => {
     };
 
     const handleLoginSubmit = (e) => {
-        setLoading(true);
+       
         e.preventDefault();
         const validation = longinValidator.validate(loginState, '');
         setLoginState({
@@ -66,6 +66,7 @@ const LoginFrom = (props) => {
         });
         const { userName, password } = loginState;
         if (validation.isValid) {
+            setLoading(true);
             userService.login(userName, password)
                 .then(
                     res => {

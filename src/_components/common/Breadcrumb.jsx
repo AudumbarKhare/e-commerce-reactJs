@@ -26,19 +26,9 @@ const Breadcrumbs = () => {
                 margin: '16px 0',
             }}
         >
-            {/* <Breadcrumb.Item>
-                <Link to="/dashboard">
-                    Home
-                </Link>
-            </Breadcrumb.Item> */}
             {breadcrumbItems.map((breadcrumb, index) => (
                 <Breadcrumb.Item key={index}>
                      {breadcrumb.label}
-                    {/* {index !== breadcrumbItems.length - 1 ? (
-                        <Link to={breadcrumb.link}>{breadcrumb.label}</Link>
-                    ) : (
-                        breadcrumb.label // No link for the current page
-                    )} */}
                 </Breadcrumb.Item>
             ))}
         </Breadcrumb>
