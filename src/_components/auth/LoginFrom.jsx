@@ -75,6 +75,8 @@ const LoginFrom = (props) => {
                             props.setLoggedIn(true, res.data);
                             clearLoginForm();
                             props.navigate('/dashboard')
+                        }else{
+                            toast.error(res.errors[0])
                         }
                     },
                     (error) => {
