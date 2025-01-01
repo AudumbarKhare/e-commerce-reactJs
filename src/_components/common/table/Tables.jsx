@@ -10,7 +10,7 @@ export const Tables = ({ data, columns, columnFilter = false, onAdd, saveBtnTitl
     const defaultColumn = useMemo(() => ({
         Filter: ColumnFilterPopUp ? ColumnFilterPopUp : () => null
     }), [ColumnFilterPopUp]);
-
+    console.log(JSON.stringify(data))
     const modifiedColumns = useMemo(() =>
         columns.map(col => ({
             ...col,
