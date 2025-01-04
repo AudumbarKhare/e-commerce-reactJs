@@ -3,7 +3,7 @@ import withNavigate from '../../../_helpers/WithNavigate';
 import withLocation from '../../../_helpers/withLocation';
 import { Col, Form, Row, Input, Spin, Select, Radio, Upload, Button, Card, Image } from 'antd';
 // import "./product.css";
-import { UploadOutlined } from '@ant-design/icons';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import FormValidator from '../../../_validators/FormValidator';
 import bigImg from '../../../assets/image/bigImage.jpg';
 import productImg from '../../../assets/image/noImage.png';
@@ -72,27 +72,64 @@ const AddProduct = (props) => {
         }));
     };
 
+    // Handle Image Upload
+    const handleImgChange = (info, index) => {
+        const { file } = info;
+        const newImages = [...state.productImages];
 
+        if (file?.originFileObj) {
+            const imgUrl = URL.createObjectURL(file.originFileObj);
+            newImages[index] = { img: imgUrl };
+            setState((prevState) => ({
+                ...prevState,
+                productImages: newImages,
+                bigImage: index === 0 ? imgUrl : prevState.bigImage,
+            }));
+        }
+    };
 
-    const handleImgChange = (info) => {
-        const { fileList } = info;
+    // Handle Click on Small Images to Set Big Image
+    const handleImageClick = (img) => {
+        setState((prevState) => ({
+            ...prevState,
+            bigImage: img,
+        }));
+    };
 
-        const updatedImages = fileList.map((file) => {
-            if (file) {
-                const imgUrl = URL.createObjectURL(file.originFileObj);
-                return { img: imgUrl };
-            }
-            return { img: productImg };
-        });
+    // Handle Image Removal
+    const handleRemoveImage = (index) => {
+        const newImages = [...state.productImages];
+        newImages[index] = { img: productImg }; // Reset to placeholder
+        const isBigImageRemoved = state.bigImage === newImages[index].img;
 
         setState((prevState) => ({
             ...prevState,
-            productImages: updatedImages,
-            bigImage: updatedImages[0]?.img || bigImg,
+            productImages: newImages,
+            bigImage: isBigImageRemoved ? bigImg : prevState.bigImage,
         }));
-
-        setFileToUpload(fileList.map((file) => file.originFileObj));
     };
+
+
+
+    // const handleImgChange = (info) => {
+    //     const { fileList } = info;
+
+    //     const updatedImages = fileList.map((file) => {
+    //         if (file) {
+    //             const imgUrl = URL.createObjectURL(file.originFileObj);
+    //             return { img: imgUrl };
+    //         }
+    //         return { img: productImg };
+    //     });
+
+    //     setState((prevState) => ({
+    //         ...prevState,
+    //         productImages: updatedImages,
+    //         bigImage: updatedImages[0]?.img || bigImg,
+    //     }));
+
+    //     setFileToUpload(fileList.map((file) => file.originFileObj));
+    // };
 
     const getPictures = (id) => {
 
@@ -439,8 +476,8 @@ const AddProduct = (props) => {
 
                             {/* <Card> */}
 
-                            <Row gutter={16} justify="center">
-                                <Col span={10} style={{ marginLeft: '10px' }}>
+                            {/* <Row gutter={16} justify="center">
+                                <Col span={12} style={{ marginLeft: '10px' }}>
                                     <Image
                                         width={400}
                                         height={400}
@@ -460,7 +497,44 @@ const AddProduct = (props) => {
 
                                     ))}
                                 </Col>
-                            </Row>
+                            </Row> */}
+                            <div style={{ display: "flex", gap: "16px" }}>
+                                <div style={{ flex: 2 }}>
+                                    <Image
+                                        width="100%"
+                                        height="100%"
+                                        src={state.bigImage}
+                                        alt="Big Preview"
+                                    />
+                                </div>
+                                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
+                                    {state.productImages.map((image, index) => (
+                                        <Upload
+                                            key={index}
+                                            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
+                                            listType="picture-card"
+                                            showUploadList={false}
+                                            onChange={(info) => handleImgChange(info, index)}
+                                        >
+                                            <div
+                                                onClick={() => handleImageClick(image.img)}
+                                                style={{
+                                                    cursor: "pointer",
+                                                    border: "1px solid #d9d9d9",
+                                                    padding: "8px",
+                                                    textAlign: "center",
+                                                }}
+                                            >
+                                                {image.img ? (
+                                                    <Image width={50} height={50} src={image.img} preview={false} />
+                                                ) : (
+                                                    <PlusOutlined />
+                                                )}
+                                            </div>
+                                        </Upload>
+                                    ))}
+                                </div>
+                            </div>
                             {/* </Card> */}
                         </Col>
                     </Row>
