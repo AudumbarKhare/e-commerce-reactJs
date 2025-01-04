@@ -11,6 +11,8 @@ import Color from './_components/masters/Color';
 import Tag from './_components/masters/Tag';
 import UserType from './_components/masters/UserType';
 import BrandLogo from './_components/masters/BrandLogo';
+import ProductList from './_components/products/physical/ProductList';
+import AddProduct from './_components/products/physical/AddProduct';
 
 export default class App extends Component {
   render() {
@@ -27,6 +29,8 @@ export default class App extends Component {
             <Route path='/masters/tag' element={<Tag />} />
             <Route path='/masters/usertype' element={<UserType />} />
             <Route path='/masters/brandlogo' element={<BrandLogo />} />
+            <Route path='/products/physical/product-list' element={<ProductList/>}/>
+            <Route path='/products/physical/add-product' element={<AddProduct />} />
           </Route>
           <Route path='*' element={<Login />} />
         </Routes>
