@@ -3,7 +3,7 @@ import withNavigate from '../../../_helpers/WithNavigate';
 import withLocation from '../../../_helpers/withLocation';
 import { Col, Form, Row, Input, Spin, Select, Radio, Upload, Button, Card, Image } from 'antd';
 // import "./product.css";
-import { UploadOutlined } from '@ant-design/icons';
+import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import FormValidator from '../../../_validators/FormValidator';
 import bigImg from '../../../assets/image/bigImage.jpg';
 import productImg from '../../../assets/image/noImage.png';
@@ -11,6 +11,22 @@ import DbOperation from '../../../_helpers/dbOperation';
 import { toast, ToastContainer } from 'react-toastify';
 import { CommonService } from '../../../_services/Common.Service';
 import Global from '../../../_helpers/BasePath';
+
+const uploadButton = (
+    <button style={{
+        border: 0,
+        background: 'none'
+    }}
+        type='button'
+    >
+        <PlusOutlined />
+        <div style={{
+            marginTop: 8
+        }}>
+            Upload
+        </div>
+    </button>
+)
 
 const AddProduct = (props) => {
     const validatorReg = new FormValidator([
@@ -338,6 +354,17 @@ const AddProduct = (props) => {
                                 </Select>
                             </Form.Item>
                             <Form.Item
+                                label="Tag"
+                                validateStatus={_validation?.tagId?.isInvalid ? 'error' : ''}
+                                help={_validation?.tagId?.message}
+                            >
+                                <Select name="tagId" value={product.tagId} placeholder="Select the Product Tag" onChange={(value) => handleChangeInput({ target: { name: 'tagId', value } })}>
+                                    {state.objTags.map(tag => (
+                                        <Select.Option key={tag.id} value={tag.id}>{tag.name}</Select.Option>
+                                    ))}
+                                </Select>
+                            </Form.Item>
+                            <Form.Item
                                 label="Category"
                                 validateStatus={_validation?.categoryId?.isInvalid ? 'error' : ''}
                                 help={_validation?.categoryId?.message}
@@ -424,44 +451,40 @@ const AddProduct = (props) => {
                                     ))}
                                 </Select>
                             </Form.Item>
-                            <Form.Item
-                                label="Tag"
-                                validateStatus={_validation?.tagId?.isInvalid ? 'error' : ''}
-                                help={_validation?.tagId?.message}
-                            >
-                                <Select name="tagId" value={product.tagId} placeholder="Select the Product Tag" onChange={(value) => handleChangeInput({ target: { name: 'tagId', value } })}>
-                                    {state.objTags.map(tag => (
-                                        <Select.Option key={tag.id} value={tag.id}>{tag.name}</Select.Option>
-                                    ))}
-                                </Select>
-                            </Form.Item>
 
-
-                            {/* <Card> */}
-
-                            <Row gutter={16} justify="center">
-                                <Col span={10} style={{ marginLeft: '10px' }}>
+                            <Row gutter={16} >
+                                <Col span={12} style={{ marginLeft: '20px' }}>
                                     <Image
                                         width={400}
-                                        height={400}
+                                        height={500}
                                         src={state.bigImage}
-                                        alt="Product Image"
+                                        alt='Product Image'
                                     />
                                 </Col>
                                 <Col span={4}>
-                                    {state.productImages.map((image, index) => (
+                                    {
+                                        state.btnText.toLowerCase() === 'update' ? (
+                                            state.productImages.map((image, index) => (
 
-                                        <Image key={index}
-                                            width={80}
-                                            height={80}
-                                            src={image.img}
-                                            alt={`Product Sub Image ${index + 1}`}
-                                        />
+                                                <Image key={index}
+                                                    width={100}
+                                                    height={100}
+                                                    src={image.img}
+                                                />
+                                            ))
+                                        ) : (state.productImages.map((image, index) => (
 
-                                    ))}
+                                            <Image key={index}
+                                                width={100}
+                                                height={100}
+                                                src={image.img}
+                                            />
+                                        )))
+
+
+                                    }
                                 </Col>
                             </Row>
-                            {/* </Card> */}
                         </Col>
                     </Row>
                     <Row justify="center" style={{ marginTop: '20px' }}>
