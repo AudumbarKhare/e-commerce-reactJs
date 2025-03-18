@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import withNavigate from '../../../_helpers/WithNavigate';
 import withLocation from '../../../_helpers/withLocation';
 import { Col, Form, Row, Input, Spin, Select, Radio, Upload, Button, Card, Image } from 'antd';
-// import "./product.css";
-import { PlusOutlined, UploadOutlined } from '@ant-design/icons';
+import "./product.css";
+import { EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import FormValidator from '../../../_validators/FormValidator';
 import bigImg from '../../../assets/image/bigImage.jpg';
 import productImg from '../../../assets/image/noImage.png';
@@ -86,6 +86,7 @@ const AddProduct = (props) => {
                 bigImage: index === 0 ? imgUrl : prevState.bigImage,
             }));
         }
+        setFileToUpload((prev) => [...prev.slice(0, index), file.originFileObj, ...prev.slice(index + 1)]);
     };
 
     // Handle Click on Small Images to Set Big Image
@@ -137,7 +138,8 @@ const AddProduct = (props) => {
             if (res.isSuccess && res.data.length > 0) {
                 const images = res.data.map((img) =>
                     // console.log(Global.BASE_IMAGES_PATH + img.name)
-                    img != null ? Global.BASE_IMAGES_PATH + img.name : productImg
+                    // img != null ? Global.BASE_IMAGES_PATH + img.name : productImg
+                    img != null ? img.name : productImg
                 );
                 setState((prevState) => ({
                     ...prevState,
@@ -234,16 +236,9 @@ const AddProduct = (props) => {
     }
 
     const handleSubmit = () => {
-        // setState((prevState) => ({
-        //     ...prevState,
-        //     product:form.getFieldsValue()
-        // }));
-        // const data = form.getFieldsValue();
-        const { product, dbops } = state;
-        // console.log("Product " + JSON.stringify(product));
+        
+        const { product, dbops, productImages } = state;
         const validation = validatorReg.validate({ product }, 'product');
-
-        console.log("Product validation" + JSON.stringify(validation));
         setState((prevState) => ({
             ...prevState,
             validationReg: validation,
@@ -252,7 +247,6 @@ const AddProduct = (props) => {
         const { categoryId, code, colorId, description, discount, name, price, quantity, salePrice, shortDetails, sizeId, tagId, title } = product;
 
         const { isSale, isNew, id } = product;
-        // console.log(isSale+" "+isNew+" "+categoryId+" "+code+" "+colorId+" "+description+" "+discount+" "+name+" "+price+" "+quantity+" "+salePrice+" "+shortDetails+" "+sizeId+" "+tagId+" "+title)
         if (dbops === DbOperation.create && fileToUpload.length < 5) {
             toast.error("Please upload 5 images per product !!", "Add Product");
         } else if ((dbops === DbOperation.update && fileToUpload.length > 0) && fileToUpload.length < 5) {
@@ -418,7 +412,7 @@ const AddProduct = (props) => {
                                     </Form.Item>
                                 </Col>
                             </Row>
-                            <Form.Item label="Upload Images">
+                            {/* <Form.Item label="Upload Images">
                                 <Upload
                                     beforeUpload={() => false}
                                     onChange={handleImgChange}
@@ -426,7 +420,14 @@ const AddProduct = (props) => {
                                 >
                                     <Button icon={<UploadOutlined />}>Upload</Button>
                                 </Upload>
-                            </Form.Item>
+                            </Form.Item> */}
+                            <Row justify="center" style={{ marginTop: '20px' }}>
+                                <Col xs={24} sm={12}  style={{ textAlign: 'center' }}>
+                                    <Button htmlType="submit" type="primary" style={{ margin: '5px' }}> {state.btnText} </Button>
+                                    <Button style={{ margin: '5px' }}> Cancel </Button>
+                                    <Button style={{ margin: '5px' }}> Clear </Button>
+                                </Col>
+                            </Row>
                         </Col>
                         <Col xs={24} md={12}>
                             <Form.Item
@@ -499,52 +500,77 @@ const AddProduct = (props) => {
                                 </Col>
                             </Row> */}
                             <div style={{ display: "flex", gap: "16px" }}>
-                                <div style={{ flex: 2 }}>
+                                {/* Big Image Section */}
+                                <div className='bigImage' style={{ flex: 2 }}>
                                     <Image
                                         width="100%"
                                         height="100%"
+                                        preview={false}
                                         src={state.bigImage}
                                         alt="Big Preview"
                                     />
                                 </div>
-                                <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: "8px" }}>
+
+                                {/* Small Images Section */}
+                                <div
+                                    style={{
+                                        flex: 1,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        gap: "8px",
+                                    }}
+                                >
                                     {state.productImages.map((image, index) => (
-                                        <Upload
-                                            key={index}
-                                            action="https://660d2bd96ddfa2943b33731c.mockapi.io/api/upload"
-                                            listType="picture-card"
-                                            showUploadList={false}
-                                            onChange={(info) => handleImgChange(info, index)}
+
+                                        <div
+                                            className='icon-container'
                                         >
+                                            {/* Image */}
+                                            <Image
+                                                width="100%"
+                                                height="100%"
+                                                src={image.img}
+                                                preview={false}
+                                                style={{ objectFit: "cover" }}
+                                                className="hover-overlay"
+                                            />
+
+                                            {/* Hover Icons */}
                                             <div
-                                                onClick={() => handleImageClick(image.img)}
-                                                style={{
-                                                    cursor: "pointer",
-                                                    border: "1px solid #d9d9d9",
-                                                    padding: "8px",
-                                                    textAlign: "center",
-                                                }}
+                                                className='icons'
+
                                             >
-                                                {image.img ? (
-                                                    <Image width={50} height={50} src={image.img} preview={false} />
-                                                ) : (
-                                                    <PlusOutlined />
-                                                )}
+                                                <Upload
+                                                    key={index}
+                                                    showUploadList={false}
+                                                    onChange={(info) => handleImgChange(info, index)}
+                                                >
+                                                    <Button
+                                                        type="text"
+                                                        icon={<PlusOutlined style={{ fontSize: "20px", color: "#000" }} />}
+                                                        style={{ marginRight: "8px" }}
+                                                    /></Upload>
+                                                <Button
+                                                    type="text"
+                                                    icon={<EyeOutlined style={{ fontSize: "20px", color: "#000" }} />}
+                                                    onClick={() => handleImageClick(image.img)}
+                                                />
                                             </div>
-                                        </Upload>
+                                        </div>
+
                                     ))}
                                 </div>
                             </div>
                             {/* </Card> */}
                         </Col>
                     </Row>
-                    <Row justify="center" style={{ marginTop: '20px' }}>
+                    {/* <Row justify="center" style={{ marginTop: '20px' }}>
                         <Col xs={24} sm={12} md={8} lg={6} style={{ textAlign: 'center' }}>
                             <Button htmlType="submit" type="primary" style={{ margin: '5px' }}> {state.btnText} </Button>
                             <Button style={{ margin: '5px' }}> Cancel </Button>
                             <Button style={{ margin: '5px' }}> Clear </Button>
                         </Col>
-                    </Row>
+                    </Row> */}
                 </Form>
             </Spin>
             <ToastContainer />

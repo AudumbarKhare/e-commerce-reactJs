@@ -9,7 +9,8 @@ export const CommonService = {
     getAll,
     getProductPicturebyId,
     getById,
-    delete: _delete
+    delete: _delete,
+    updateProfile
 };
 
 // Login function
@@ -65,6 +66,12 @@ async function _delete(controlerName, isFile, model) {
 async function getProductPicturebyId(controlerName, isFile, id) {
     const requestOptions = createRequestOptions('GET', null, isFile);
     const response = await fetch(BasePath.BASE_API_PATH + `${controlerName}/GetProductPicturebyId/${id}`, requestOptions);
+    return handleResponse(response);
+}
+
+async function updateProfile(controlerName, isFile, mode) {
+    const requestOptions = createRequestOptions('POST', mode, isFile);
+    const response = await fetch(BasePath.BASE_API_PATH+`${controlerName}/UpdateProfile/`,requestOptions);
     return handleResponse(response);
 }
 

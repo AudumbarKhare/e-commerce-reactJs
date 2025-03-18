@@ -1,0 +1,23 @@
+.icons{
+    border: 1px solid;
+    padding: 15px;
+    border-radius: 25px;
+    margin: 5px;
+    color: #fff;
+}
+
+.icons:first-child{
+    background-color: #6a6e85;
+}
+
+.icons:nth-child(2){
+    background-color: #50598e;
+}
+
+.icons:nth-child(3){
+    background-color: #6fa2d8;
+}
+
+.icons:nth-child(4){
+    background-color: #c64e40;
+}

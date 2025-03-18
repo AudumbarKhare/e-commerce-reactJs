@@ -13,6 +13,10 @@ import UserType from './_components/masters/UserType';
 import BrandLogo from './_components/masters/BrandLogo';
 import ProductList from './_components/products/physical/ProductList';
 import AddProduct from './_components/products/physical/AddProduct';
+import ListUser from './_components/users/ListUser';
+import AddUser from './_components/users/AddUser';
+import Profile from './_components/settings/profile';
+import UserDetails from './_components/common/user/UserDetails';
 
 export default class App extends Component {
   render() {
@@ -31,6 +35,10 @@ export default class App extends Component {
             <Route path='/masters/brandlogo' element={<BrandLogo />} />
             <Route path='/products/physical/product-list' element={<ProductList/>}/>
             <Route path='/products/physical/add-product' element={<AddProduct />} />
+            <Route path='/users/list-user' element={<ListUser />} />
+            <Route path='/users/add-user' element={<AddUser />} />
+            <Route path='/common/user/UserDetails' element={<UserDetails />} />
+            <Route path='/settings/profile' element={<Profile />} />
           </Route>
           <Route path='*' element={<Login />} />
         </Routes>
