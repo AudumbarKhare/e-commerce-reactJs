@@ -111,7 +111,8 @@ const UserDetails = (props) => {
                     }).finally(() => {
                         setIsLading(false);
                         setIsSumitted(false);
-                    })
+                    });
+                    break;
                 case DbOperation.update:
                     CommonService.update('UserMaster', false, userInfo).then((res) => {
                         if (res.isSuccess) {
