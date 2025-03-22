@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import withNavigate from '../../../_helpers/WithNavigate';
-<<<<<<< HEAD
-import withLocation from '../../../_helpers/withLocation';
-import { Col, Form, Row, Input, Spin, Select, Radio, Upload, Button, Card, Image } from 'antd';
-import "./product.css";
-import { EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-=======
 import withLocation from '../../../_helpers/WithLocation';
 import { Col, Form, Row, Input, Spin, Select, Radio, Upload, Button, Card, Image } from 'antd';
 import "./product.css";
-import { UploadOutlined } from '@ant-design/icons';
->>>>>>> main
+import { EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import FormValidator from '../../../_validators/FormValidator';
 import bigImg from '../../../assets/image/bigImage.jpg';
 import productImg from '../../../assets/image/noImage.png';
@@ -32,11 +25,7 @@ const AddProduct = (props) => {
         { field: 'tagId', method: 'isEmpty', validWhen: false, message: 'Tag is required' },
         { field: 'categoryId', method: 'isEmpty', validWhen: false, message: 'Category is required' }
     ]);
-<<<<<<< HEAD
     const initial_state = {
-=======
-    const initialState = {
->>>>>>> main
         bigImage: bigImg,
         productImages: new Array(5).fill({ img: productImg }),
         dbops: DbOperation.create,
@@ -298,7 +287,7 @@ const AddProduct = (props) => {
                             if (res.isSuccess) {
                                 toast.success("Product data has been added successfully !!", "Add Product");
                                 clearForm();
-                                props.navigate('/products/physical/product-list');
+                                props.navigate('/products/physical/productList');
                             } else {
                                 toast.error(res.errors[0], "Add Product");
                             }
@@ -314,7 +303,7 @@ const AddProduct = (props) => {
                             if (res.isSuccess) {
                                 toast.success("Product data has been added successfully !!", "Add Product");
                                 clearForm();
-                                props.navigate('/products/physical/product-list');
+                                props.navigate('/products/physical/productList');
                             } else {
                                 toast.error("Some went Wrong !!", "Add Product");
                             }

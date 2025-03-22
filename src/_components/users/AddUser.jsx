@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import UserDetails from '../common/user/UserDetails';
 import withNavigate from '../../_helpers/WithNavigate';
-import withLocation from '../../_helpers/withLocation';
+import withLocation from '../../_helpers/WithLocation';
 import { CommonService } from '../../_services/Common.Service';
 import { toast, ToastContainer } from 'react-toastify';
 import DbOperation from '../../_helpers/dbOperation';

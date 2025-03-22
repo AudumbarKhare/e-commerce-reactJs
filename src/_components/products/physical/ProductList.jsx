@@ -12,11 +12,11 @@ const ProductList = (props) => {
   const [loading, setLoading] = useState(false);
 
   const handleAddProduct = () => {
-    props.navigate(`/products/physical/add-product`)
+    props.navigate(`/products/physical/addProduct`)
   }
 
   const onEdit = (row) => {
-    props.navigate(`/products/physical/add-product`, { state: { productId: row.id } });
+    props.navigate(`/products/physical/addProduct`, { state: { productId: row.id } });
   }
 
   const onDelete = (Id) => {

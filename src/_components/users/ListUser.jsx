@@ -11,11 +11,11 @@ const ListUser = (props) => {
   const [loading, setLoading] = useState(false);
 
   const handleAddUser = () => {
-    props.navigate(`/users/add-user`);
+    props.navigate(`/users/addUser`);
   }
 
   const onEdit = (row) => {
-    props.navigate(`/users/add-user`, { state: { userId: row.id } });
+    props.navigate(`/users/addUser`, { state: { userId: row.id } });
   }
 
   const OnDelete = (Id) => {

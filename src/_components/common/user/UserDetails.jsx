@@ -37,7 +37,7 @@ const UserDetails = (props) => {
     const [isLoading, setIsLading] = useState(false);
 
     useEffect(() => {
-       
+
         setUserInfo((pervUserInfo) => ({
             ...pervUserInfo,
             Id: props.userDetails.Id,
@@ -99,7 +99,12 @@ const UserDetails = (props) => {
                 case DbOperation.create:
                     CommonService.save('UserMaster', false, userInfo).then(
                         (res) => {
-
+                            if(res.isSuccess){
+                            toast.success("User Profile Save Successfully !!", "Profile");
+                            }else{
+                            console.error(res.errors[0])
+                            toast.error(res.errors[0], "User");
+                            }
                         }
                     ).catch((error) => {
                         console.error(error);
