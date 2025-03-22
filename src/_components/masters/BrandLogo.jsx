@@ -61,15 +61,10 @@ const BrandLogo = () => {
       const formData = new FormData();
       formData.append("Id", brandLogo.id);
       formData.append("Name", brandLogo.name);
-
-
-
       if (brandLogo.image) {
+        //console.log(brandLogo+" "+brandLogo.image+" "+brandLogo.image.name)
         formData.append("Image", brandLogo.image, brandLogo.image.name);
       }
-
-
-
       switch (dbops) {
         case DbOperation.create:
           CommonService.save("BrandLogo", true, formData)

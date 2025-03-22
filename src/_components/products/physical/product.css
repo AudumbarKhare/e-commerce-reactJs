@@ -1,4 +1,26 @@
-.productContainer{
-    display: flex;
-    flex-direction: row;
+.icon-container {
+    position: relative !important;
+    width: 30% !important;
+    height: 100px !important;
+    border: 1px solid #d9d9d9 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    overflow: hidden !important;
 }
+.icon-container .icons {
+    position: absolute;
+    display: none;
+}
+ .icon-container:hover .icons{
+    display: flex;
+  }
+
+ .bigImage .ant-image{
+    height: 70% !important;
+  }
+
+  .ant-upload-wrapper.ant-upload-picture-card-wrapper .ant-upload.ant-upload-select{
+    width: 25px !important;
+    height: 25px !important;
+  }

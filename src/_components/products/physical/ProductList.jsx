@@ -1,79 +1,79 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 import { CommonService } from '../../../_services/Common.Service';
 import { toast } from 'react-toastify';
 import getColumns from '../../common/table/genColumns';
-import { Col, Row, Spin } from 'antd';
+import { Card, Col, Row, Spin } from 'antd';
 import { Tables } from '../../common/table/Tables';
 import withNavigate from '../../../_helpers/WithNavigate';
 
-const ProductList = (props) => {
-  const [data,setData] = useState([]);
-  const [loading,setLoading] = useState(false);
 
-  const handleAddUser = () => {
-    props.navigate('/products/physical/addProduct');
-  };
+const ProductList = (props) => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleAddProduct = () => {
+    props.navigate(`/products/physical/addProduct`)
+  }
 
   const onEdit = (row) => {
-    props.navigate(`/products/physical/addProduct`, { state: { objRow: row } });
+    props.navigate(`/products/physical/addProduct`, { state: { productId: row.id } });
   }
 
   const onDelete = (Id) => {
-    const obj = { id: Id };
-    setLoading(true);
+    let obj = { id: Id };
     CommonService.delete("ProductMaster", false, obj)
       .then(
-        (res) => {
+        res => {
           if (res.isSuccess) {
-            toast.success("Data has delete Successfully !!", "User Master");
-            getData();
+            getData()
           } else {
-            toast.error(res.errors[0], "Product Master")
+            toast.error(res.errors[0], "Add Product");
           }
         },
-        () => {
-          toast.error("Something Went Wrong !!", "Product Master")
+        (error) => {
+          toast.error("Someting Went Wrong !!", "Add Product");
         }
-      ).finally(() => setLoading(false));
+      )
   }
 
   const getData = () => {
     setLoading(true);
     CommonService.getAll("ProductMaster", false)
-      .then((res) => {
-        if (res.isSuccess) {
-          setData(res.data);
-        } else {
-          toast.error(res.errors[0], "Product Master");
+      .then(
+        res => {
+          if (res.isSuccess) {
+            setData(res.data);
+          } else {
+            toast.error(res.errors[0], "Add Product")
+          }
+        },
+        (error) => {
+          toast.error("Someting Went Wrong !!", "Add Product")
         }
-      },
-        () => {
-          toast.error("Something Went Wrong !!", "Product Master");
-        }).finally(() => setLoading(false));
-  };
+      ).finally(()=> setLoading(false))
+  }
 
-  useEffect(() => {
+  useEffect(()=>{
     getData();
-  }, []);
+  },[])
 
   let columns = ['name', 'title', 'code', 'price', 'salePrice', 'discount', 'quantity', 'createdOn'];
-  const tableCols = getColumns(columns, true, onEdit, onDelete)
-
+  let tableCols = getColumns(columns, true, onEdit, onDelete);
   return (
     <>
       <div className='container-fluid'>
         <Row>
           <Col span={24}>
-            <Spin spinning={loading}>
-              {/* {JSON.stringify(data)} */}
-              <Tables
-                data={data}
-                columns={tableCols}
-                isSave={false}
-                handleAddUser={handleAddUser}
-                saveBtnTitle='Add Product'
-              />
-            </Spin>
+            <Card title='Product Master'>
+              <Spin spinning={loading}>
+                <Tables
+                  data={data}
+                  columns={tableCols}
+                  onAdd={handleAddProduct}
+                  saveBtnTitle="Add Product"
+                />
+              </Spin>
+            </Card>
           </Col>
         </Row>
       </div>
@@ -81,4 +81,4 @@ const ProductList = (props) => {
   )
 }
 
-export default withNavigate(ProductList);
+export default withNavigate(ProductList)

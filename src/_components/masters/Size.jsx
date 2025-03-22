@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import FormValidator from '../../_validators/FormValidator';
 import { Button, Card, Col, Row, Form, Input, Spin } from 'antd';
 import { toast, ToastContainer } from 'react-toastify';
-import Breadcrumbs from '../common/Breadcrumb';
 import { Tables } from '../common/table/Tables';
 import getColumns from '../common/table/genColumns';
 import DynamicModal from '../common/DynamicModal';
