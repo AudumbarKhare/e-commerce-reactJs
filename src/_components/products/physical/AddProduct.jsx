@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import withNavigate from '../../../_helpers/WithNavigate';
+<<<<<<< HEAD
 import withLocation from '../../../_helpers/withLocation';
 import { Col, Form, Row, Input, Spin, Select, Radio, Upload, Button, Card, Image } from 'antd';
 import "./product.css";
 import { EyeOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
+=======
+import withLocation from '../../../_helpers/WithLocation';
+import { Col, Form, Row, Input, Spin, Select, Radio, Upload, Button, Card, Image } from 'antd';
+import "./product.css";
+import { UploadOutlined } from '@ant-design/icons';
+>>>>>>> main
 import FormValidator from '../../../_validators/FormValidator';
 import bigImg from '../../../assets/image/bigImage.jpg';
 import productImg from '../../../assets/image/noImage.png';
@@ -25,7 +32,11 @@ const AddProduct = (props) => {
         { field: 'tagId', method: 'isEmpty', validWhen: false, message: 'Tag is required' },
         { field: 'categoryId', method: 'isEmpty', validWhen: false, message: 'Category is required' }
     ]);
+<<<<<<< HEAD
     const initial_state = {
+=======
+    const initialState = {
+>>>>>>> main
         bigImage: bigImg,
         productImages: new Array(5).fill({ img: productImg }),
         dbops: DbOperation.create,

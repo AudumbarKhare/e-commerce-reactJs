@@ -1,9 +1,11 @@
 import React from 'react';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { Modal } from 'antd';
-import BasePath from '../../../_helpers/BasePath';
+//import BasePath from '../../../_helpers/BasePath';
+import Global from '../../../_helpers/BasePath';
 
 const { confirm } = Modal;
+const {BASE_IMAGES_PATH} = Global;
 
 const capitalize = (colName) => {
     return colName.charAt(0).toUpperCase() + colName.slice(1);
@@ -35,11 +37,10 @@ const getColumns = (tableColumns, isAction, editRow, deleteRow) => {
 
         switch (key) {
             case 'imagePath':
-                // console.log(row.original.imagePath)
                 columns.push({
                     ...commonProps,
                     disableFilters: true,
-                    Cell: ({ row }) => <img alt="image" src={row.original.imagePath} style={{ width: 50, height: 50 }} />,
+                    Cell: ({ row }) => <img alt="image" src={BASE_IMAGES_PATH+""+row.original.imagePath} style={{ width: 50, height: 50 }} />,
                     sortable: false,
                 });
                 break;

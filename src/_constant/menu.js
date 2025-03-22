@@ -22,8 +22,8 @@ export const MENUITEMS = [
         label: 'Products',
         icon: <AppstoreOutlined />,
         children: [
-            { key: '7', label: 'Product List', path: '/products/physical/product-list', type: 'link' },
-            { key: '8', label: 'Add Product', path: '/products/physical/add-product', type: 'link' },
+            { key: '7', label: 'Product List', path: '/products/physical/productList', type: 'link' },
+            { key: '8', label: 'Add Product', path: '/products/physical/addProduct', type: 'link' },
         ],
     },
     {
@@ -40,8 +40,8 @@ export const MENUITEMS = [
         label: 'Users',
         icon: <UserAddOutlined />,
         children: [
-            { key: 'list-user', label: 'User List', path: '/users/list-user', type: 'link' },
-            { key: 'add-user', label: 'Add User', path: '/users/add-user', type: 'link' },
+            { key: 'list-user', label: 'User List', path: '/users/listUser', type: 'link' },
+            { key: 'add-user', label: 'Add User', path: '/users/addUser', type: 'link' },
         ],
     },
     {

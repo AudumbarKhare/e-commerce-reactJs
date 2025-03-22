@@ -11,12 +11,15 @@ import Color from './_components/masters/Color';
 import Tag from './_components/masters/Tag';
 import UserType from './_components/masters/UserType';
 import BrandLogo from './_components/masters/BrandLogo';
+import AddUser from './_components/users/AddUser';
+import ListUser from './_components/users/ListUser';
+import Profile from './_components/settings/profile';
+import Orders from './_components/sales/Orders';
+import Transactions from './_components/sales/Transactions';
+import Reports from './_components/reports/Reports';
+import Invoice from './_components/invoice/Invoice';
 import ProductList from './_components/products/physical/ProductList';
 import AddProduct from './_components/products/physical/AddProduct';
-import ListUser from './_components/users/ListUser';
-import AddUser from './_components/users/AddUser';
-import Profile from './_components/settings/profile';
-import UserDetails from './_components/common/user/UserDetails';
 
 export default class App extends Component {
   render() {
@@ -33,12 +36,19 @@ export default class App extends Component {
             <Route path='/masters/tag' element={<Tag />} />
             <Route path='/masters/usertype' element={<UserType />} />
             <Route path='/masters/brandlogo' element={<BrandLogo />} />
-            <Route path='/products/physical/product-list' element={<ProductList/>}/>
-            <Route path='/products/physical/add-product' element={<AddProduct />} />
-            <Route path='/users/list-user' element={<ListUser />} />
-            <Route path='/users/add-user' element={<AddUser />} />
-            <Route path='/common/user/UserDetails' element={<UserDetails />} />
+
+            <Route path='/sales/orders' element={<Orders />} />
+            <Route path='/sales/transactions' element={<Transactions />} />
+
+            <Route path='/products/physical/productList' element={<ProductList />} />
+            <Route path='/products/physical/addProduct' element={<AddProduct />} />
+
+            <Route path='/users/addUser' element={<AddUser />} />
+            <Route path='/users/listUser' element={<ListUser />} />
+
             <Route path='/settings/profile' element={<Profile />} />
+            <Route path='/reports' element={<Reports />} />
+            <Route path='/invoice' element={<Invoice />} />
           </Route>
           <Route path='*' element={<Login />} />
         </Routes>

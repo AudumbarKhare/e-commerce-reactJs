@@ -233,7 +233,8 @@ const BrandLogo = () => {
             <Form layout='vertical' onFinish={handleSubmit}>
               <Form.Item
                 label="BrandLogo Name"
-                validateStatus={_validation.name.isInvalid ? _validation.name.message : ''}
+                validateStatus={_validation.name.isInvalid ? 'error' : ''}
+                help={_validation?.name?.message}
               >
                 <Input
                   type='text'
